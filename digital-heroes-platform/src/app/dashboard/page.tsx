@@ -1,6 +1,4 @@
-// ✅ NO "use client" — this is a Server Component
 import { redirect } from "next/navigation";
-
 import { AnimatedCard } from "@/components/animated-card";
 import { DashboardActions } from "@/components/dashboard-actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";

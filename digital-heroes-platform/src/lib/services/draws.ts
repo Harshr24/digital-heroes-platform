@@ -3,7 +3,7 @@ import { addMonths, startOfMonth } from "date-fns";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import type { DrawMode } from "@/types/domain";
 
-function generateRandomNumbers(length: number, max: number) {
+export function generateRandomNumbers(length: number, max: number) {
   const numbers = new Set<number>();
   while (numbers.size < length) {
     numbers.add(Math.floor(Math.random() * max) + 1);

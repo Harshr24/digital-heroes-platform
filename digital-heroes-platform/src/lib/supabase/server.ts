@@ -1,6 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-
 import { env } from "@/lib/env";
 
 export async function createSupabaseServerClient() {
@@ -13,7 +12,7 @@ export async function createSupabaseServerClient() {
       },
       setAll(cookiesToSet) {
         cookiesToSet.forEach(({ name, value, options }) =>
-          cookieStore.set(name, value, options),
+          cookieStore.set(name, value, options)
         );
       },
     },

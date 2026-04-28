@@ -3,6 +3,11 @@ import { redirect } from "next/navigation";
 import { AnimatedCard } from "@/components/animated-card";
 import { DashboardActions } from "@/components/dashboard-actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { useRouter } from "next/navigation";
+
+const router = useRouter();
+
+router.push("/dashboard");
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();

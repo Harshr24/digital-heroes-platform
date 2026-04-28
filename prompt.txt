@@ -1,0 +1,201 @@
+Act as a senior full-stack architect, product engineer, and AI coding agent.
+
+Your goal is to DESIGN, BUILD, TEST, and PREPARE FOR DEPLOYMENT a complete production-ready web application based on the PRD below.
+
+You must:
+- Think step-by-step
+- Generate code in phases
+- Automatically create files and folder structure
+- Ensure everything is functional and connected
+- Avoid placeholders unless absolutely necessary
+- Fix your own errors during generation
+
+-----------------------------------
+PROJECT NAME: Digital Heroes Platform
+TYPE: Subscription-based Golf + Charity + Draw System
+
+TECH STACK:
+- Frontend: Next.js (App Router) + TypeScript + Tailwind CSS + Framer Motion
+- Backend: Supabase (PostgreSQL + Auth + Storage + Realtime)
+- Payments: Stripe
+- Deployment: Vercel
+
+-----------------------------------
+
+DEVELOPMENT STRATEGY:
+
+You MUST build the project in the following PHASES:
+
+PHASE 1: Architecture & Folder Structure
+PHASE 2: Database Schema (Supabase SQL)
+PHASE 3: Backend (API routes, services, business logic)
+PHASE 4: Authentication & Authorization
+PHASE 5: Subscription & Stripe Integration
+PHASE 6: Core Features (Scores, Draws, Charity)
+PHASE 7: Admin Dashboard
+PHASE 8: UI/UX Implementation
+PHASE 9: Notifications & Emails
+PHASE 10: Security & Validation
+PHASE 11: Testing & Edge Cases
+PHASE 12: Deployment Setup
+
+DO NOT SKIP ANY PHASE.
+
+-----------------------------------
+
+CORE FEATURES:
+
+1. AUTH SYSTEM
+- Signup/Login (Supabase Auth)
+- Role-based access: user / admin
+- Protected routes (middleware)
+
+2. SUBSCRIPTION SYSTEM
+- Monthly & Yearly plans via Stripe
+- Webhooks to update DB
+- Status: active, cancelled, expired
+- Restrict features if inactive
+
+3. USER DASHBOARD
+- Subscription status
+- Enter/edit golf scores (1–45)
+- Only last 5 scores stored
+- Auto-delete oldest score
+- No duplicate dates
+- Charity selection (min 10%)
+- Draw participation
+- Winnings & payout status
+
+4. SCORE SYSTEM
+- Max 5 scores per user
+- Replace oldest automatically
+- Reverse chronological order
+
+5. DRAW SYSTEM
+- Monthly execution
+- Match tiers:
+  5 match → 40% (jackpot, rollover)
+  4 match → 35%
+  3 match → 25%
+
+DRAW MODES:
+- Random
+- Algorithmic (frequency weighted)
+
+- Simulation mode
+- Admin publishes results
+
+6. PRIZE POOL
+- Based on active subscribers
+- Split equally among winners
+- Jackpot rollover
+
+7. CHARITY SYSTEM
+- Charity directory
+- Charity profiles
+- User selects at signup
+- Min 10% contribution
+- Optional extra donations
+
+8. WINNER VERIFICATION
+- Upload proof (image)
+- Admin approval/rejection
+- Payment status: pending → paid
+
+9. ADMIN DASHBOARD
+- Users management
+- Score editing
+- Draw control (run, simulate, publish)
+- Charity CRUD
+- Winner verification
+- Analytics dashboard
+
+10. UI/UX
+- Modern, emotional design
+- NOT typical golf theme
+- Clean + animated
+- Strong CTA
+- Mobile-first
+
+11. EMAIL NOTIFICATIONS
+- Signup
+- Subscription updates
+- Draw results
+- Winner alerts
+
+-----------------------------------
+
+DATABASE REQUIREMENTS:
+
+Generate FULL SQL schema for Supabase including:
+
+Tables:
+- users
+- subscriptions
+- scores
+- draws
+- draw_results
+- winnings
+- charities
+- donations
+- verification_submissions
+
+Include:
+- Relationships
+- Constraints
+- Indexes
+- Row Level Security (RLS)
+
+-----------------------------------
+
+OUTPUT FORMAT RULES:
+
+For EACH phase:
+1. Explain what you're building (short)
+2. Generate code
+3. Show file structure
+4. Ensure integration with previous phases
+
+-----------------------------------
+
+IMPORTANT CONSTRAINTS:
+
+- Use TypeScript everywhere
+- Clean modular code
+- Production-ready quality
+- No broken logic
+- No unnecessary complexity
+- Add comments only where useful
+
+-----------------------------------
+
+AUTO-FIX MODE:
+
+After each phase:
+- Detect possible bugs
+- Fix them proactively
+- Improve structure if needed
+
+-----------------------------------
+
+BONUS FEATURES:
+
+If time permits, also add:
+- Leaderboard
+- Referral system
+- Dark mode
+
+-----------------------------------
+
+START NOW:
+
+Begin with PHASE 1:
+- Define architecture
+- Folder structure
+- Tech decisions
+- Data flow diagram (text-based)
+
+Then continue sequentially.
+
+DO NOT ASK QUESTIONS.
+PROCEED UNTIL FULL APPLICATION IS COMPLETE.

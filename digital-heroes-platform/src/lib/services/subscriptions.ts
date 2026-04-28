@@ -1,32 +1,12 @@
-import { stripe } from "@/lib/stripe";
-import { supabaseAdmin } from "@/lib/supabase/admin";
-
-export async function createCheckoutSession(
-  userId: string,
-  userEmail: string,
-  priceId: string,
-  appUrl: string,
-) {
-  const session = await stripe.checkout.sessions.create({
-    mode: "subscription",
-    customer_email: userEmail,
-    line_items: [{ price: priceId, quantity: 1 }],
-    subscription_data: {
-      metadata: { userId },
-    },
-    success_url: `${appUrl}/dashboard?checkout=success`,
-    cancel_url: `${appUrl}/dashboard?checkout=cancelled`,
-    metadata: { userId },
-  });
-
-  return session;
-}
-
 export async function syncSubscriptionFromStripe(stripeSubscriptionId: string) {
   const subscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
   const userId = subscription.metadata.userId;
 
   if (!userId) return;
+
+  // ✅ Cast to any — Stripe's TS types for 2025-03-31.basil are incomplete
+  const sub = subscription as any;
+  const item = sub.items?.data?.[0];
 
   const mappedStatus =
     subscription.status === "active"
@@ -43,13 +23,13 @@ export async function syncSubscriptionFromStripe(stripeSubscriptionId: string) {
       stripe_customer_id: String(subscription.customer),
       stripe_subscription_id: subscription.id,
       plan:
-        subscription.items.data[0]?.price?.recurring?.interval === "year"
+        item?.price?.recurring?.interval === "year"
           ? "yearly"
           : "monthly",
       status: mappedStatus,
-      period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-      period_end: new Date(subscription.current_period_end * 1000).toISOString(),
-      cancel_at_period_end: subscription.cancel_at_period_end,
+      period_start: new Date((item?.current_period_start ?? sub.current_period_start) * 1000).toISOString(),
+      period_end: new Date((item?.current_period_end ?? sub.current_period_end) * 1000).toISOString(),
+      cancel_at_period_end: sub.cancel_at_period_end ?? false,
     },
     { onConflict: "user_id" },
   );

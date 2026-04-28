@@ -1,10 +1,35 @@
+import { stripe } from "@/lib/stripe";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+
+// ✅ Function 1 — make sure this is still here
+export async function createCheckoutSession(
+  userId: string,
+  userEmail: string,
+  priceId: string,
+  appUrl: string,
+) {
+  const session = await stripe.checkout.sessions.create({
+    mode: "subscription",
+    customer_email: userEmail,
+    line_items: [{ price: priceId, quantity: 1 }],
+    subscription_data: {
+      metadata: { userId },
+    },
+    success_url: `${appUrl}/dashboard?checkout=success`,
+    cancel_url: `${appUrl}/dashboard?checkout=cancelled`,
+    metadata: { userId },
+  });
+
+  return session;
+}
+
+// ✅ Function 2
 export async function syncSubscriptionFromStripe(stripeSubscriptionId: string) {
   const subscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
   const userId = subscription.metadata.userId;
 
   if (!userId) return;
 
-  // ✅ Cast to any — Stripe's TS types for 2025-03-31.basil are incomplete
   const sub = subscription as any;
   const item = sub.items?.data?.[0];
 
@@ -15,7 +40,7 @@ export async function syncSubscriptionFromStripe(stripeSubscriptionId: string) {
         ? "cancelled"
         : subscription.status === "incomplete_expired"
           ? "expired"
-          : "incomplete";
+          : "inactive";
 
   await supabaseAdmin.from("subscriptions").upsert(
     {
